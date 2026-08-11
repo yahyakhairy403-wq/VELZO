@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELZO - المنصة التعليمية الأكبر لتعلم البرمجة</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Dark Theme (Default) */
+            --bg-primary: #0a0e17;
+            --bg-secondary: #121826;
+            --bg-card: #1a2236;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent-glow: #00f2fe;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #06b6d4;
+            --border-color: #2e3a52;
+            --shadow-color: rgba(0, 242, 254, 0.15);
+            --code-bg: #0f172a;
+        }
+
+        [data-theme="light"] {
+            /* Light Theme */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-glow: #0284c7;
+            --accent-primary: #2563eb;
+            --accent-secondary: #0284c7;
+            --border-color: #cbd5e1;
+            --shadow-color: rgba(37, 99, 235, 0.12);
+            --code-bg: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Japanese-inspired Background Grid Accent */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.25;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            height: 52px;
+            width: auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Container Content */
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 45px 25px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        .hero::before {
+            content: "</>";
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            font-size: 7rem;
+            font-family: 'Fira Code', monospace;
+            color: var(--accent-glow);
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .japanese-badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .hero h1 span.brand-name {
+            color: var(--accent-primary);
+        }
+
+        .hero p.tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 850px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        .tech-tags {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tech-tag {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tech-tag.html { color: #e34f26; }
+        .tech-tag.css { color: #1572b6; }
+        .tech-tag.js { color: #f7df1e; }
+
+        /* Features Section */
+        .features-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-right: 5px solid var(--accent-primary);
+            padding-right: 15px;
+            color: var(--text-primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 22px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-primary);
+        }
+
+        .feature-icon {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-primary);
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* Security & Terms Section */
+        .security-box {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        }
+
+        .security-box h3 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-primary);
+        }
+
+        .policy-content {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px 22px;
+            max-height: 160px;
+            overflow-y: auto;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .policy-content p {
+            margin-bottom: 8px;
+        }
+
+        .agree-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+            background: var(--bg-card);
+            padding: 14px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.2s;
+        }
+
+        .agree-container:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .agree-container input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-primary);
+            cursor: pointer;
+        }
+
+        .agree-container label {
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.02rem;
+            color: var(--text-primary);
+        }
+
+        /* Error Banner */
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-top: 12px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* Action Start Button */
+        .action-container {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #ffffff;
+            font-size: 1.3rem;
+            font-weight: 800;
+            padding: 18px 45px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 35px var(--shadow-color);
+        }
+
+        .start-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: var(--bg-secondary);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p.tagline {
+                font-size: 1.05rem;
+            }
+
+            .container {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .start-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 16px 20px;
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="logo-container">
+            <img id="platform-logo" class="logo-img" src="https://files.catbox.moe/l4juom.jpeg" alt="شعار منصة VELZO">
+            <span class="logo-text">VELZO</span>
+        </div>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="تبديل الوضع">
+            <i id="theme-icon" class="fa-solid fa-sun"></i>
+            <span id="theme-text">الوضع المشرق</span>
+        </button>
+    </header>
+
+    <div class="container">
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <span class="japanese-badge"><i class="fa-solid fa-torii-gate"></i> المنهجية اليابانية التفاعلية</span>
+            <h1>مرحبا بك فى منصة <span class="brand-name">VELZO</span></h1>
+            <p class="tagline">
+                اكبر منصة تعليميه فى الشرق الاوسط فى تعلم لغات البرمجه الثلاث HTML, CSS, JS على الطريقه اليابانيه وتصميم وتطوير مواقع الويب.
+            </p>
+
+            <div class="tech-tags">
+                <span class="tech-tag html"><i class="fa-brands fa-html5"></i> HTML5</span>
+                <span class="tech-tag css"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+                <span class="tech-tag js"><i class="fa-brands fa-square-js"></i> JavaScript</span>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2 class="section-title">
+                <i class="fa-solid fa-star"></i> مميزات منصتنا:
+            </h2>
+            <div class="features-grid">
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-brain"></i></div>
+                    <div class="feature-text">
+                        استمتع بتجربه تفاعليه حقيقيه لتعلم البرمجه بطريقه صحيحه تعتمد على قدرتك فى حل المشاكل
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-robot"></i></div>
+                    <div class="feature-text">
+                        المنصه توفر معلم برمجى بواسطة الAI لتدريبك وتعلمك بشكل صحيح
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="feature-text">
+                        بعد كل فصل هناك اختبار مصغر يقيس مهاراتك فى الفصل، ويلزم الحصول على 20 نقطه على الأقل لفتح الفصل التالى
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-code"></i></div>
+                    <div class="feature-text">
+                        بعد كل جزئية شرح سيكون هناك مثال بسيط
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-certificate"></i></div>
+                    <div class="feature-text">
+                        بعد انهاء الفصول يمكنك الحصول على شهاده من منصة VELZO لإثبات ما تعلمته
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                    <div class="feature-text">
+                        فى نهاية المسيره ستوفر لك المنصه أمثله حيه لبعض المشاريع البرمجيه
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Security & Terms Box -->
+        <section class="security-box">
+            <h3><i class="fa-solid fa-shield-halved"></i> شروط الأمان وسياسة الخصوصية</h3>
+            <div class="policy-content">
+                <p><strong>مرحباً بك في منصة VELZO التعليمية:</strong></p>
+                <p>تلتزم منصتنا بحماية خصوصيتك وبياناتك الشخصية وتوفير بيئة تعليمية آمنة وموثوقة لجميع الطلاب والمطورين.</p>
+                <p>1. <strong>حماية البيانات:</strong> يتم تشفير جميع بياناتك واختباراتك وحفظ تقدمك بشكل آمن ولا يتم مشاركتها مع أي طرف ثالث.</p>
+                <p>2. <strong>الاستخدام العادل:</strong> يُمنع استخدام أدوات الذكاء الاصطناعي الخاصة بالمنصة بطرق تخالف قواعد التعلم أو محاولة التلاعب بنقاط الاختبارات.</p>
+                <p>3. <strong>الشهادات:</strong> تُمنح الشهادات فقط بعد اجتياز كافة الاختبارات والتطبيقات العملية بنجاح وبجهد شخصي.</p>
+                <p>4. <strong>الاستمرار:</strong> بالضغط على موافق، أنت تقر بقراءة وشروط الاستخدام وسياسة حماية البيانات الخاصة بـ VELZO.</p>
+            </div>
+
+            <div class="agree-container" onclick="toggleCheckbox(event)">
+                <input type="checkbox" id="terms-agree">
+                <label for="terms-agree">أوافق على شروط الأمان وسياسة الخصوصية الخاص بمنصة VELZO</label>
+            </div>
+            
+            <div id="error-msg" class="error-msg">
+                <i class="fa-solid fa-circle-exclamation"></i> يرجى القراءة والموافقة على شروط الأمان وسياسة الخصوصية أولاً للانتقال إلى صفحة Password.html.
+            </div>
+        </section>
+
+        <!-- Action Button -->
+        <div class="action-container">
+            <button id="start-btn" class="start-btn">
+                <span>ابدأ الآن مجانا مع VELZO</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <footer>
+        جميع الحقوق محفوظة © 2026 - منصة VELZO التعليمية
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        // Images URLs for Dark & Light Mode
+        const DARK_LOGO_URL = "https://files.catbox.moe/l4juom.jpeg";
+        const LIGHT_LOGO_URL = "https://files.catbox.moe/ln2rqt.jpeg";
+
+        // DOM Elements
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+        const platformLogo = document.getElementById('platform-logo');
+        const termsCheckbox = document.getElementById('terms-agree');
+        const startBtn = document.getElementById('start-btn');
+        const errorMsg = document.getElementById('error-msg');
+
+        // Dynamic Theme Switch Logic
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                // Switch to Light Mode
+                document.body.setAttribute('data-theme', 'light');
+                platformLogo.src = LIGHT_LOGO_URL;
+                themeIcon.className = 'fa-solid fa-moon';
+                themeText.textContent = 'الوضع الداكن';
+            } else {
+                // Switch to Dark Mode
+                document.body.setAttribute('data-theme', 'dark');
+                platformLogo.src = DARK_LOGO_URL;
+                themeIcon.className = 'fa-solid fa-sun';
+                themeText.textContent = 'الوضع المشرق';
+            }
+        });
+
+        // Helper to handle checkbox container click
+        function toggleCheckbox(e) {
+            if (e.target.tagName !== 'INPUT') {
+                termsCheckbox.checked = !termsCheckbox.checked;
+            }
+            if (termsCheckbox.checked) {
+                errorMsg.style.display = 'none';
+            }
+        }
+
+        termsCheckbox.addEventListener('change', () => {
+            if (termsCheckbox.checked) {
+                errorMsg.style.display = 'none';
+            }
+        });
+
+        // Validation & Navigation Logic
+        startBtn.addEventListener('click', () => {
+            if (!termsCheckbox.checked) {
+                errorMsg.style.display = 'flex';
+                document.querySelector('.security-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                errorMsg.style.display = 'none';
+                // Redirect to Password.html
+                window.location.href = 'Password.html';
+            }
+        });
+    </script>
+</body>
+</html>
