@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELZO - مسار التعلم</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #121826;
+            --bg-card: #1a2236;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent-glow: #00f2fe;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #06b6d4;
+            --border-color: #2e3a52;
+            --shadow-color: rgba(0, 242, 254, 0.15);
+            --code-bg: #0f172a;
+            --input-bg: #0f172a;
+            --gold-color: #fbbf24;
+            --locked-bg: rgba(30, 41, 59, 0.7);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-glow: #0284c7;
+            --accent-primary: #2563eb;
+            --accent-secondary: #0284c7;
+            --border-color: #cbd5e1;
+            --shadow-color: rgba(37, 99, 235, 0.12);
+            --code-bg: #e2e8f0;
+            --input-bg: #f1f5f9;
+            --gold-color: #d97706;
+            --locked-bg: rgba(241, 245, 249, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Japanese Background Pattern */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.2;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Background Teacher Image Watermark */
+        .bg-teacher-watermark {
+            position: fixed;
+            top: 50%;
+            left: 15%;
+            transform: translate(-50%, -50%);
+            width: 45vw;
+            max-width: 500px;
+            height: auto;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: -1;
+            filter: grayscale(20%) blur(0.5px);
+            border-radius: 20px;
+            object-fit: cover;
+        }
+
+        /* Header */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            padding: 16px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 48px;
+            width: auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Points Counter Widget */
+        .points-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--gold-color);
+            box-shadow: 0 3px 12px rgba(251, 191, 36, 0.15);
+        }
+
+        .points-box i {
+            font-size: 1.2rem;
+            animation: pulse-star 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-star {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .theme-toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* Main Workspace Grid */
+        .main-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            align-items: start;
+            z-index: 10;
+        }
+
+        /* Half 1: Teacher VELZO & Chat Bubble Section */
+        .teacher-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 12px 35px var(--shadow-color);
+            overflow: hidden;
+        }
+
+        .teacher-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        /* Main Transparent Teacher Illustration Display */
+        .teacher-hero-img {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            border-radius: 20px;
+            object-fit: cover;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border: 2px solid var(--border-color);
+            transition: transform 0.4s ease;
+        }
+
+        .teacher-hero-img:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        /* Chat Speech Bubble Container */
+        .chat-container {
+            width: 100%;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .chat-avatar-ring {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-glow));
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .chat-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .chat-speech-bubble {
+            flex: 1;
+            position: relative;
+        }
+
+        .chat-teacher-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chat-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Half 2: Module Cards Section (3 Vertical Boxes) */
+        .modules-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section-header-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 5px;
+            border-right: 4px solid var(--accent-primary);
+            padding-right: 12px;
+        }
+
+        .module-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+
+        .module-card.unlocked:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px var(--shadow-color);
+        }
+
+        .module-card.locked {
+            opacity: 0.85;
+            background: var(--locked-bg);
+            border-style: dashed;
+        }
+
+        .module-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .module-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .module-icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .module-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            font-family: 'Fira Code', monospace;
+            color: var(--text-primary);
+        }
+
+        .module-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-badge.open {
+            background: rgba(16, 185, 129, 0.12);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-badge.locked-badge {
+            background: rgba(239, 68, 68, 0.12);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .lock-notice-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .module-action-btn {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .module-action-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #ffffff;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .module-action-btn.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px var(--shadow-color);
+        }
+
+        .module-action-btn.disabled {
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .module-action-btn.disabled:hover {
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        /* Modal for Lock Warning */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            color: #ef4444;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .modal-desc {
+            font-size: 0.98rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .close-btn {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: var(--bg-secondary);
+            z-index: 10;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .main-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .bg-teacher-watermark {
+                width: 80vw;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Transparent Background Watermark Teacher Image -->
+    <img id="bg-teacher-img" class="bg-teacher-watermark" src="https://files.catbox.moe/qi0yew.jpeg" alt="المعلم VELZO">
+
+    <!-- Header / Navbar -->
+    <header>
+        <a href="to learn.html" class="logo-container">
+            <img id="platform-logo" class="logo-img" src="https://files.catbox.moe/l4juom.jpeg" alt="شعار VELZO">
+            <span class="logo-text">VELZO</span>
+        </a>
+
+        <div class="header-actions">
+            <!-- Points Counter -->
+            <div class="points-box">
+                <i class="fa-solid fa-star"></i>
+                <span id="points-count">0</span> نقاط
+            </div>
+
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="theme-toggle-btn">
+                <i id="theme-icon" class="fa-solid fa-sun"></i>
+                <span id="theme-text">الوضع المشرق</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="main-wrapper">
+        
+        <!-- Half 1: Teacher VELZO & Chat Bubble -->
+        <section class="teacher-section">
+            <span class="teacher-badge"><i class="fa-solid fa-user-ninja"></i> معلمك البرمجي الذكي</span>
+            
+            <!-- Programming Teacher Image -->
+            <img src="https://files.catbox.moe/qi0yew.jpeg" alt="المعلم VELZO" class="teacher-hero-img">
+
+            <!-- Chat Bubble Section -->
+            <div class="chat-container">
+                <div class="chat-avatar-ring">
+                    <img src="https://files.catbox.moe/fbzkva.jpeg" alt="VELZO Chat Avatar" class="chat-avatar">
+                </div>
+                <div class="chat-speech-bubble">
+                    <div class="chat-teacher-title">
+                        <span>المعلم VELZO</span>
+                        <i class="fa-solid fa-circle-check" style="color: #00f2fe; font-size: 0.85rem;"></i>
+                    </div>
+                    <p class="chat-text">
+                        "مرحبا بك عزيزى المتعلم، انا المعلم VELZO سأكون معك طوال رحلتك فى تعلم البرمجه على هذه المنصه، هل انت جاهز الآن للتميز؟"
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Half 2: 3 Course Modules Cards Stacked -->
+        <section class="modules-section">
+            <h2 class="section-header-title">
+                <i class="fa-solid fa-graduation-cap"></i> اختر مسار التعلم
+            </h2>
+
+            <!-- Box 1: HTML Module -->
+            <div class="module-card unlocked">
+                <div class="module-card-header">
+                    <div class="module-info">
+                        <div class="module-icon-box">
+                            <i class="fa-brands fa-html5" style="color: #e34f26;"></i>
+                        </div>
+                        <div>
+                            <div class="module-title">HTML</div>
+                            <div class="module-subtitle">لغة هيكلة صفحات الويب الأساسية</div>
+                        </div>
+                    </div>
+                    <span class="status-badge open">
+                        <i class="fa-solid fa-unlock"></i> مفتوح الآن
+                    </span>
+                </div>
+
+                <a href="HTML.HTML" class="module-action-btn active">
+                    <span>اذهب لقائمة الفصول الآن</span>
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+            </div>
+
+            <!-- Box 2: CSS Module (Locked) -->
+            <div class="module-card locked" id="css-card">
+                <div class="module-card-header">
+                    <div class="module-info">
+                        <div class="module-icon-box">
+                            <i class="fa-brands fa-css3-alt" style="color: #1572b6;"></i>
+                        </div>
+                        <div>
+                            <div class="module-title">CSS <i class="fa-solid fa-lock" style="font-size: 1rem; color: #ef4444; margin-right: 5px;"></i></div>
+                            <div class="module-subtitle">لغة تصميم وتنسيق المواقع الإلكترونية</div>
+                        </div>
+                    </div>
+                    <span class="status-badge locked-badge" id="css-badge">
+                        <i class="fa-solid fa-lock"></i> مقفل
+                    </span>
+                </div>
+
+                <div class="lock-notice-text">
+                    <i class="fa-solid fa-circle-info" style="color: #3b82f6;"></i>
+                    <span>لا يمكن فتح هذا المسار غير لما المستخدم يعدى فصول ملف HTML.HTML كامله.</span>
+                </div>
+
+                <button id="css-btn" class="module-action-btn disabled" onclick="handleLockedClick('CSS')">
+                    <span>اذهب لقائمة الفصول الآن</span>
+                    <i class="fa-solid fa-lock"></i>
+                </button>
+            </div>
+
+            <!-- Box 3: JS Module (Locked) -->
+            <div class="module-card locked" id="js-card">
+                <div class="module-card-header">
+                    <div class="module-info">
+                        <div class="module-icon-box">
+                            <i class="fa-brands fa-square-js" style="color: #f7df1e;"></i>
+                        </div>
+                        <div>
+                            <div class="module-title">JS <i class="fa-solid fa-lock" style="font-size: 1rem; color: #ef4444; margin-right: 5px;"></i></div>
+                            <div class="module-subtitle">لغة البرمجة التفاعلية وبناء الوظائف</div>
+                        </div>
+                    </div>
+                    <span class="status-badge locked-badge" id="js-badge">
+                        <i class="fa-solid fa-lock"></i> مقفل
+                    </span>
+                </div>
+
+                <div class="lock-notice-text">
+                    <i class="fa-solid fa-circle-info" style="color: #3b82f6;"></i>
+                    <span>لا يمكن فتح هذا المسار غير لما المستخدم يعدى فصول ملف HTML.HTML كامله.</span>
+                </div>
+
+                <button id="js-btn" class="module-action-btn disabled" onclick="handleLockedClick('JS')">
+                    <span>اذهب لقائمة الفصول الآن</span>
+                    <i class="fa-solid fa-lock"></i>
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Locked Warning Modal -->
+    <div id="lock-modal" class="modal-overlay">
+        <div class="modal-card">
+            <i class="fa-solid fa-lock modal-icon"></i>
+            <h3 class="modal-title">المسار مغلق حالياً</h3>
+            <p id="modal-msg-text" class="modal-desc">
+                عذراً، لا يمكنك الانتقال لهذا المسار إلا بعد إجتياز جميع فصول HTML.HTML بنجاح وتحصيل النقاط المطلوبة!
+            </p>
+            <button class="close-btn" onclick="closeLockModal()">حسناً، فهمت</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        جميع الحقوق محفوظة © 2026 - منصة VELZO التعليمية
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        // Image Sources
+        const DARK_LOGO_URL = "https://files.catbox.moe/l4juom.jpeg";
+        const LIGHT_LOGO_URL = "https://files.catbox.moe/ln2rqt.jpeg";
+
+        // DOM Elements
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+        const platformLogo = document.getElementById('platform-logo');
+        const pointsCountEl = document.getElementById('points-count');
+        const lockModal = document.getElementById('lock-modal');
+        const modalMsgText = document.getElementById('modal-msg-text');
+
+        // 1. Theme Sync and Toggle
+        function applyTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('velzo_theme', theme);
+            
+            if (theme === 'dark') {
+                platformLogo.src = DARK_LOGO_URL;
+                themeIcon.className = 'fa-solid fa-sun';
+                themeText.textContent = 'الوضع المشرق';
+            } else {
+                platformLogo.src = LIGHT_LOGO_URL;
+                themeIcon.className = 'fa-solid fa-moon';
+                themeText.textContent = 'الوضع الداكن';
+            }
+        }
+
+        // Initialize Theme based on saved selection
+        const savedTheme = localStorage.getItem('velzo_theme') || 'dark';
+        applyTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+
+        // 2. Load User Points (Default: 0)
+        let currentPoints = parseInt(localStorage.getItem('velzo_points')) || 0;
+        pointsCountEl.textContent = currentPoints;
+
+        // 3. Check Progress & Lock Status
+        const isHtmlCompleted = localStorage.getItem('velzo_html_completed') === 'true';
+
+        if (isHtmlCompleted) {
+            // Unlock CSS
+            const cssCard = document.getElementById('css-card');
+            const cssBadge = document.getElementById('css-badge');
+            const cssBtn = document.getElementById('css-btn');
+
+            cssCard.classList.remove('locked');
+            cssCard.classList.add('unlocked');
+            cssBadge.className = 'status-badge open';
+            cssBadge.innerHTML = '<i class="fa-solid fa-unlock"></i> مفتوح الآن';
+            cssBtn.className = 'module-action-btn active';
+            cssBtn.innerHTML = '<span>اذهب لقائمة الفصول الآن</span> <i class="fa-solid fa-arrow-left"></i>';
+            cssBtn.onclick = function() { window.location.href = 'CSS.HTML'; };
+        }
+
+        const isCssCompleted = localStorage.getItem('velzo_css_completed') === 'true';
+        if (isHtmlCompleted && isCssCompleted) {
+            // Unlock JS
+            const jsCard = document.getElementById('js-card');
+            const jsBadge = document.getElementById('js-badge');
+            const jsBtn = document.getElementById('js-btn');
+
+            jsCard.classList.remove('locked');
+            jsCard.classList.add('unlocked');
+            jsBadge.className = 'status-badge open';
+            jsBadge.innerHTML = '<i class="fa-solid fa-unlock"></i> مفتوح الآن';
+            jsBtn.className = 'module-action-btn active';
+            jsBtn.innerHTML = '<span>اذهب لقائمة الفصول الآن</span> <i class="fa-solid fa-arrow-left"></i>';
+            jsBtn.onclick = function() { window.location.href = 'JS.HTML'; };
+        }
+
+        // 4. Modal Warning Handler for Locked Modules
+        function handleLockedClick(moduleName) {
+            modalMsgText.textContent = `عذراً، لا يمكنك فتح مسار ${moduleName} غير لما المستخدم يعدى فصول ملف HTML.HTML كامله!`;
+            lockModal.style.display = 'flex';
+        }
+
+        function closeLockModal() {
+            lockModal.style.display = 'none';
+        }
+
+        lockModal.addEventListener('click', (e) => {
+            if (e.target === lockModal) {
+                closeLockModal();
+            }
+        });
+    </script>
+</body>
+</html>

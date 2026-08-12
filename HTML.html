@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELZO - قائمة فصول مسار HTML</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Fira+Code:wght@400;600&family=Reem+Kufi:wght@700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #121826;
+            --bg-card: #1a2236;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent-glow: #00f2fe;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #06b6d4;
+            --border-color: #2e3a52;
+            --shadow-color: rgba(0, 242, 254, 0.15);
+            --code-bg: #0f172a;
+            --gold-color: #fbbf24;
+            --success-color: #10b981;
+            --locked-color: #ef4444;
+            --quiz-bg: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(0, 242, 254, 0.08));
+            --final-quiz-bg: linear-gradient(135deg, rgba(251, 191, 36, 0.18), rgba(245, 158, 11, 0.08));
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-glow: #0284c7;
+            --accent-primary: #2563eb;
+            --accent-secondary: #0284c7;
+            --border-color: #cbd5e1;
+            --shadow-color: rgba(37, 99, 235, 0.12);
+            --code-bg: #e2e8f0;
+            --gold-color: #d97706;
+            --success-color: #059669;
+            --locked-color: #dc2626;
+            --quiz-bg: linear-gradient(135deg, #eff6ff, #e0f2fe);
+            --final-quiz-bg: linear-gradient(135deg, #fffbeb, #fef3c7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.2;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .bg-watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60vw;
+            max-width: 550px;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: -1;
+            filter: grayscale(30%);
+        }
+
+        /* Header */
+        header {
+            width: 100%;
+            max-width: 1200px;
+            padding: 16px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 48px;
+            width: auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .points-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--gold-color);
+            box-shadow: 0 3px 12px rgba(251, 191, 36, 0.15);
+        }
+
+        .theme-toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* Container Main */
+        .main-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            z-index: 10;
+        }
+
+        /* Banner */
+        .course-banner {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .banner-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            background: rgba(227, 79, 38, 0.1);
+            border: 2px solid #e34f26;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            color: #e34f26;
+        }
+
+        .banner-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--text-primary);
+        }
+
+        .banner-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .back-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 22px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* Part Section Headers */
+        .part-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            border-right: 5px solid var(--accent-primary);
+            padding-right: 15px;
+        }
+
+        .part-header h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-primary);
+        }
+
+        .part-header span {
+            font-size: 0.9rem;
+            color: var(--accent-secondary);
+            font-weight: 700;
+            background: rgba(6, 182, 212, 0.1);
+            padding: 4px 12px;
+            border-radius: 15px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        /* Grid */
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        /* Chapter Card Item */
+        .chapter-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .chapter-card.unlocked:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+
+        .chapter-card.locked {
+            opacity: 0.75;
+            background: var(--bg-card);
+            border-style: dashed;
+            cursor: pointer;
+        }
+
+        .chapter-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .chapter-num {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: var(--accent-primary);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .status-badge {
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 5px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-badge.open {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--success-color);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-badge.lock {
+            background: rgba(239, 68, 68, 0.12);
+            color: var(--locked-color);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .chapter-title {
+            font-size: 1.18rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+
+        .chapter-desc {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .chapter-action-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 0.98rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .chapter-action-btn.active:hover {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border-color: transparent;
+        }
+
+        .chapter-action-btn.disabled {
+            background: rgba(239, 68, 68, 0.08);
+            color: var(--locked-color);
+            border-color: rgba(239, 68, 68, 0.2);
+            cursor: pointer;
+        }
+
+        /* Quiz Banner Card */
+        .quiz-card {
+            background: var(--quiz-bg);
+            border: 2px solid var(--accent-primary);
+            border-radius: 20px;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0 25px 0;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+        }
+
+        .quiz-card.locked {
+            opacity: 0.8;
+            border-color: var(--border-color);
+            border-style: dashed;
+            background: var(--bg-card);
+        }
+
+        .quiz-info {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .quiz-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            background: var(--accent-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .quiz-title {
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: var(--text-primary);
+        }
+
+        .quiz-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Distinct 25 Points Badge */
+        .points-badge-25 {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.1));
+            color: var(--gold-color);
+            border: 1px solid var(--gold-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 900;
+            font-size: 0.95rem;
+            box-shadow: 0 3px 10px rgba(251, 191, 36, 0.15);
+        }
+
+        .quiz-start-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 14px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .quiz-start-btn.disabled {
+            background: var(--bg-card);
+            color: var(--locked-color);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            box-shadow: none;
+        }
+
+        /* Final Exam Special Card */
+        .final-quiz-card {
+            background: var(--final-quiz-bg);
+            border: 2px solid var(--gold-color);
+            border-radius: 24px;
+            padding: 35px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0 40px 0;
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.25);
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+        }
+
+        .final-quiz-card.locked {
+            opacity: 0.8;
+            border-color: var(--border-color);
+            border-style: dashed;
+            background: var(--bg-card);
+        }
+
+        .final-quiz-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            box-shadow: 0 6px 20px rgba(217, 119, 6, 0.3);
+        }
+
+        /* Distinct 70 Points Badge - Large, Attractive & Bold Font */
+        .points-badge-70 {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #fbbf24, #d97706);
+            color: #000000;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-family: 'Reem Kufi', sans-serif;
+            font-weight: 900;
+            font-size: 1.4rem;
+            box-shadow: 0 5px 20px rgba(251, 191, 36, 0.4);
+            letter-spacing: 0.5px;
+            animation: pulse-gold 2.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(251, 191, 36, 0.4); }
+            50% { transform: scale(1.06); box-shadow: 0 8px 30px rgba(251, 191, 36, 0.7); }
+        }
+
+        .final-quiz-btn {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 6px 20px rgba(217, 119, 6, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .final-quiz-btn.disabled {
+            background: var(--bg-card);
+            color: var(--locked-color);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            box-shadow: none;
+        }
+
+        /* Custom Modal for Lock Messages */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 22px;
+            padding: 35px;
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .modal-icon-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.12);
+            color: var(--locked-color);
+            border: 2px solid var(--locked-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 20px auto;
+        }
+
+        .modal-title {
+            font-size: 1.45rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .modal-desc {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .close-modal-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 13px 32px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        footer {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: var(--bg-secondary);
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .course-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            .banner-info {
+                flex-direction: column;
+            }
+            .quiz-card, .final-quiz-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .quiz-info {
+                flex-direction: column;
+            }
+            .quiz-start-btn, .final-quiz-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Watermark Logo -->
+    <img id="bg-watermark-logo" class="bg-watermark" src="https://files.catbox.moe/l4juom.jpeg" alt="VELZO Watermark">
+
+    <!-- Header -->
+    <header>
+        <a href="to learn.html" class="logo-container">
+            <img id="platform-logo" class="logo-img" src="https://files.catbox.moe/l4juom.jpeg" alt="شعار VELZO">
+            <span class="logo-text">VELZO</span>
+        </a>
+
+        <div class="header-actions">
+            <!-- Points Counter -->
+            <div class="points-box">
+                <i class="fa-solid fa-star"></i>
+                <span id="points-count">0</span> نقاط
+            </div>
+
+            <!-- Theme Toggle -->
+            <button id="theme-toggle" class="theme-toggle-btn">
+                <i id="theme-icon" class="fa-solid fa-sun"></i>
+                <span id="theme-text">الوضع المشرق</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+
+        <!-- Banner -->
+        <section class="course-banner">
+            <div class="banner-info">
+                <div class="banner-icon">
+                    <i class="fa-brands fa-html5"></i>
+                </div>
+                <div>
+                    <h1 class="banner-title">مسار احتراف لغة HTML</h1>
+                    <p class="banner-subtitle">أنهِ جميع الفصول والاختبارات واحصل على 135 نقطة لفتح مسار CSS</p>
+                </div>
+            </div>
+            <a href="to learn.html" class="back-btn">
+                <i class="fa-solid fa-arrow-right"></i>
+                <span>العودة للمسارات</span>
+            </a>
+        </section>
+
+        <!-- ==================== PART 1 ==================== -->
+        <div class="part-header">
+            <h2>الجزء الأول: أساسيات وبنية مستند الويب</h2>
+            <span>الفصول 1 - 5</span>
+        </div>
+
+        <div class="chapters-grid">
+            <!-- Ch 1 -->
+            <div class="chapter-card" id="ch-card-1">
+                <div class="chapter-top">
+                    <div class="chapter-num">01</div>
+                    <span class="status-badge" id="ch-badge-1"></span>
+                </div>
+                <h3 class="chapter-title">مقدمة إلى عالم الويب وبيئة عمل HTML</h3>
+                <p class="chapter-desc">فهم ماهية لغة HTML وكيف تعمل المتصفحات وإعداد المحرر البرمجي الأول.</p>
+                <button class="chapter-action-btn" id="ch-btn-1"></button>
+            </div>
+
+            <!-- Ch 2 -->
+            <div class="chapter-card" id="ch-card-2">
+                <div class="chapter-top">
+                    <div class="chapter-num">02</div>
+                    <span class="status-badge" id="ch-badge-2"></span>
+                </div>
+                <h3 class="chapter-title">الهيكل الأساسي لمستند HTML</h3>
+                <p class="chapter-desc">شرح الوسوم الرئيسية: DOCTYPE, html, head, body والفرق بينهم.</p>
+                <button class="chapter-action-btn" id="ch-btn-2"></button>
+            </div>
+
+            <!-- Ch 3 -->
+            <div class="chapter-card" id="ch-card-3">
+                <div class="chapter-top">
+                    <div class="chapter-num">03</div>
+                    <span class="status-badge" id="ch-badge-3"></span>
+                </div>
+                <h3 class="chapter-title">العناوين والفقرات النصية (Headings & Paragraphs)</h3>
+                <p class="chapter-desc">التعامل مع وسوم العناوين h1 إلى h6 ووسم الفقرات p وتنسيق النصوص.</p>
+                <button class="chapter-action-btn" id="ch-btn-3"></button>
+            </div>
+
+            <!-- Ch 4 -->
+            <div class="chapter-card" id="ch-card-4">
+                <div class="chapter-top">
+                    <div class="chapter-num">04</div>
+                    <span class="chapter-badge"><span class="status-badge" id="ch-badge-4"></span></span>
+                </div>
+                <h3 class="chapter-title">تنسيقات النصوص المتقدمة واقتباس الكود</h3>
+                <p class="chapter-desc">استخدام وسوم b, i, strong, em, code, pre لتنسيق المحتوى النصي.</p>
+                <button class="chapter-action-btn" id="ch-btn-4"></button>
+            </div>
+
+            <!-- Ch 5 -->
+            <div class="chapter-card" id="ch-card-5">
+                <div class="chapter-top">
+                    <div class="chapter-num">05</div>
+                    <span class="status-badge" id="ch-badge-5"></span>
+                </div>
+                <h3 class="chapter-title">الروابط التشعبية والربط بين الصفحات (Hyperlinks)</h3>
+                <p class="chapter-desc">شرح وسم a وخاصية href والربط الخارجي والداخلي بين صفحات الموقع.</p>
+                <button class="chapter-action-btn" id="ch-btn-5"></button>
+            </div>
+        </div>
+
+        <!-- Quiz 1 -->
+        <div class="quiz-card" id="quiz-card-1">
+            <div class="quiz-info">
+                <div class="quiz-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+                <div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+                        <h3 class="quiz-title">اختبار الجزء الأول (الفصول 1 - 5)</h3>
+                        <span class="points-badge-25"><i class="fa-solid fa-star"></i> 25 نقطة</span>
+                    </div>
+                    <p class="quiz-desc">قِس معلوماتك في المفاهيم الأساسية وهيكلية الصفحات للحصول على النقاط!</p>
+                </div>
+            </div>
+            <button class="quiz-start-btn" id="quiz-btn-1"></button>
+        </div>
+
+
+        <!-- ==================== PART 2 ==================== -->
+        <div class="part-header">
+            <h2>الجزء الثاني: الوسائط والقوائم والجداول</h2>
+            <span>الفصول 6 - 10</span>
+        </div>
+
+        <div class="chapters-grid">
+            <!-- Ch 6 -->
+            <div class="chapter-card" id="ch-card-6">
+                <div class="chapter-top">
+                    <div class="chapter-num">06</div>
+                    <span class="status-badge" id="ch-badge-6"></span>
+                </div>
+                <h3 class="chapter-title">إضافة الصور وتحسين العرض (Images)</h3>
+                <p class="chapter-desc">استخدام وسم img وخصائص src, alt, width, height والتنظيم البصري.</p>
+                <button class="chapter-action-btn" id="ch-btn-6"></button>
+            </div>
+
+            <!-- Ch 7 -->
+            <div class="chapter-card" id="ch-card-7">
+                <div class="chapter-top">
+                    <div class="chapter-num">07</div>
+                    <span class="status-badge" id="ch-badge-7"></span>
+                </div>
+                <h3 class="chapter-title">إدراج المقاطع الصوتية والفيديو (Audio & Video)</h3>
+                <p class="chapter-desc">التعامل مع وسوم audio و video وخصائص التشغيل التلقائي والتحكم.</p>
+                <button class="chapter-action-btn" id="ch-btn-7"></button>
+            </div>
+
+            <!-- Ch 8 -->
+            <div class="chapter-card" id="ch-card-8">
+                <div class="chapter-top">
+                    <div class="chapter-num">08</div>
+                    <span class="status-badge" id="ch-badge-8"></span>
+                </div>
+                <h3 class="chapter-title">القوائم المرتبة وغير المرتبة (Lists)</h3>
+                <p class="chapter-desc">شرح وسوم ul, ol, li, dl وإنشاء قوائم متداخلة منظمة.</p>
+                <button class="chapter-action-btn" id="ch-btn-8"></button>
+            </div>
+
+            <!-- Ch 9 -->
+            <div class="chapter-card" id="ch-card-9">
+                <div class="chapter-top">
+                    <div class="chapter-num">09</div>
+                    <span class="status-badge" id="ch-badge-9"></span>
+                </div>
+                <h3 class="chapter-title">المسارات النسبية والمطلقة للملفات (File Paths)</h3>
+                <p class="chapter-desc">كيفية استدعاء الملفات والصور من المجلدات بدقة دون أخطاء.</p>
+                <button class="chapter-action-btn" id="ch-btn-9"></button>
+            </div>
+
+            <!-- Ch 10 -->
+            <div class="chapter-card" id="ch-card-10">
+                <div class="chapter-top">
+                    <div class="chapter-num">10</div>
+                    <span class="status-badge" id="ch-badge-10"></span>
+                </div>
+                <h3 class="chapter-title">بناء وتنسيق الجداول (Tables)</h3>
+                <p class="chapter-desc">استخدام وسوم table, tr, td, th, thead, tbody ودمج الخلايا rowspan و colspan.</p>
+                <button class="chapter-action-btn" id="ch-btn-10"></button>
+            </div>
+        </div>
+
+        <!-- Quiz 2 -->
+        <div class="quiz-card" id="quiz-card-2">
+            <div class="quiz-info">
+                <div class="quiz-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+                <div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+                        <h3 class="quiz-title">اختبار الجزء الثاني (الفصول 6 - 10)</h3>
+                        <span class="points-badge-25"><i class="fa-solid fa-star"></i> 25 نقطة</span>
+                    </div>
+                    <p class="quiz-desc">اختبر مهاراتك في إدراج الوسائط والقوائم وبناء الجداول البرمجية.</p>
+                </div>
+            </div>
+            <button class="quiz-start-btn" id="quiz-btn-2"></button>
+        </div>
+
+
+        <!-- ==================== PART 3 ==================== -->
+        <div class="part-header">
+            <h2>الجزء الثالث: النماذج وإدخال البيانات</h2>
+            <span>الفصول 11 - 15</span>
+        </div>
+
+        <div class="chapters-grid">
+            <!-- Ch 11 -->
+            <div class="chapter-card" id="ch-card-11">
+                <div class="chapter-top">
+                    <div class="chapter-num">11</div>
+                    <span class="status-badge" id="ch-badge-11"></span>
+                </div>
+                <h3 class="chapter-title">مقدمة في بناء النماذج (Forms Intro)</h3>
+                <p class="chapter-desc">شرح وسم form وخصائص action و method واستقبال بيانات المستخدم.</p>
+                <button class="chapter-action-btn" id="ch-btn-11"></button>
+            </div>
+
+            <!-- Ch 12 -->
+            <div class="chapter-card" id="ch-card-12">
+                <div class="chapter-top">
+                    <div class="chapter-num">12</div>
+                    <span class="status-badge" id="ch-badge-12"></span>
+                </div>
+                <h3 class="chapter-title">أنواع حقول الإدخال والتحقق (Input Types)</h3>
+                <p class="chapter-desc">التعامل مع النصوص، بريد إلكتروني، كلمة المرور، الأرقام وخصائص required.</p>
+                <button class="chapter-action-btn" id="ch-btn-12"></button>
+            </div>
+
+            <!-- Ch 13 -->
+            <div class="chapter-card" id="ch-card-13">
+                <div class="chapter-top">
+                    <div class="chapter-num">13</div>
+                    <span class="status-badge" id="ch-badge-13"></span>
+                </div>
+                <h3 class="chapter-title">أزرار الاختيار والقوائم المنسدلة (Selection)</h3>
+                <p class="chapter-desc">شرح radio, checkbox, select, option, optgroup واختيارات متعددة.</p>
+                <button class="chapter-action-btn" id="ch-btn-13"></button>
+            </div>
+
+            <!-- Ch 14 -->
+            <div class="chapter-card" id="ch-card-14">
+                <div class="chapter-top">
+                    <div class="chapter-num">14</div>
+                    <span class="status-badge" id="ch-badge-14"></span>
+                </div>
+                <h3 class="chapter-title">مربعات النصوص الطويلة ورفع الملفات</h3>
+                <p class="chapter-desc">استخدام textarea وإدخال الملفات input type="file" وتجميع الحقول fieldset.</p>
+                <button class="chapter-action-btn" id="ch-btn-14"></button>
+            </div>
+
+            <!-- Ch 15 -->
+            <div class="chapter-card" id="ch-card-15">
+                <div class="chapter-top">
+                    <div class="chapter-num">15</div>
+                    <span class="status-badge" id="ch-badge-15"></span>
+                </div>
+                <h3 class="chapter-title">أزرار التحكم وتفاعلية النماذج (Buttons)</h3>
+                <p class="chapter-desc">الفرق بين button, submit, reset وتجهيز النموذج للتكامل مع الباك إند.</p>
+                <button class="chapter-action-btn" id="ch-btn-15"></button>
+            </div>
+        </div>
+
+        <!-- Quiz 3 -->
+        <div class="quiz-card" id="quiz-card-3">
+            <div class="quiz-info">
+                <div class="quiz-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+                <div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+                        <h3 class="quiz-title">اختبار الجزء الثالث (الفصول 11 - 15)</h3>
+                        <span class="points-badge-25"><i class="fa-solid fa-star"></i> 25 نقطة</span>
+                    </div>
+                    <p class="quiz-desc">تقييم مهاراتك في تصميم وإنشاء نماذج مدخلات المستخدم واستقبال البيانات.</p>
+                </div>
+            </div>
+            <button class="quiz-start-btn" id="quiz-btn-3"></button>
+        </div>
+
+
+        <!-- ==================== PART 4 ==================== -->
+        <div class="part-header">
+            <h2>الجزء الرابع: العناصر الهيكلية والسيو (Semantic HTML)</h2>
+            <span>الفصول 16 - 20</span>
+        </div>
+
+        <div class="chapters-grid">
+            <!-- Ch 16 -->
+            <div class="chapter-card" id="ch-card-16">
+                <div class="chapter-top">
+                    <div class="chapter-num">16</div>
+                    <span class="status-badge" id="ch-badge-16"></span>
+                </div>
+                <h3 class="chapter-title">العناصر الهيكلية الحديثة (Semantic Tags)</h3>
+                <p class="chapter-desc">شرح header, nav, main, section, article, aside, footer للتقسيم الصحيح.</p>
+                <button class="chapter-action-btn" id="ch-btn-16"></button>
+            </div>
+
+            <!-- Ch 17 -->
+            <div class="chapter-card" id="ch-card-17">
+                <div class="chapter-top">
+                    <div class="chapter-num">17</div>
+                    <span class="status-badge" id="ch-badge-17"></span>
+                </div>
+                <h3 class="chapter-title">الكتل الحاوية والعناصر المدمجة (Div vs Span)</h3>
+                <p class="chapter-desc">فهم الفرق بين عناصر Block وعناصر Inline وكيفية تنظيم التنسيقات.</p>
+                <button class="chapter-action-btn" id="ch-btn-17"></button>
+            </div>
+
+            <!-- Ch 18 -->
+            <div class="chapter-card" id="ch-card-18">
+                <div class="chapter-top">
+                    <div class="chapter-num">18</div>
+                    <span class="status-badge" id="ch-badge-18"></span>
+                </div>
+                <h3 class="chapter-title">دمج الصفحات والإطارات المدمجة (Iframe)</h3>
+                <p class="chapter-desc">عرض خرائط جوجل ومقاطع يوتيوب وصفحات خارجية باستخدام وسم iframe.</p>
+                <button class="chapter-action-btn" id="ch-btn-18"></button>
+            </div>
+
+            <!-- Ch 19 -->
+            <div class="chapter-card" id="ch-card-19">
+                <div class="chapter-top">
+                    <div class="chapter-num">19</div>
+                    <span class="status-badge" id="ch-badge-19"></span>
+                </div>
+                <h3 class="chapter-title">البيانات الوصفية ومحركات البحث (Meta Tags & SEO)</h3>
+                <p class="chapter-desc">ضبط charset, viewport, description ووسوم Open Graph لتهيئة الموقع لمحركات البحث.</p>
+                <button class="chapter-action-btn" id="ch-btn-19"></button>
+            </div>
+
+            <!-- Ch 20 -->
+            <div class="chapter-card" id="ch-card-20">
+                <div class="chapter-top">
+                    <div class="chapter-num">20</div>
+                    <span class="status-badge" id="ch-badge-20"></span>
+                </div>
+                <h3 class="chapter-title">إمكانية الوصول وخصائص الخصوصية (Accessibility)</h3>
+                <p class="chapter-desc">تطبيق معايير ARIA وخصائص الشمولية لذوي الهمم ومقارئ الشاشة.</p>
+                <button class="chapter-action-btn" id="ch-btn-20"></button>
+            </div>
+        </div>
+
+        <!-- Quiz 4 -->
+        <div class="quiz-card" id="quiz-card-4">
+            <div class="quiz-info">
+                <div class="quiz-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+                <div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+                        <h3 class="quiz-title">اختبار الجزء الرابع (الفصول 16 - 20)</h3>
+                        <span class="points-badge-25"><i class="fa-solid fa-star"></i> 25 نقطة</span>
+                    </div>
+                    <p class="quiz-desc">اختبر استيعابك لبنية HTML المعنوية الحديثة وتهيئة المواقع لمحركات البحث SEO.</p>
+                </div>
+            </div>
+            <button class="quiz-start-btn" id="quiz-btn-4"></button>
+        </div>
+
+
+        <!-- ==================== PART 5 ==================== -->
+        <div class="part-header">
+            <h2>الجزء الخامس: التقنيات المتقدمة والتكامل الشامل</h2>
+            <span>الفصول 21 - 25</span>
+        </div>
+
+        <div class="chapters-grid">
+            <!-- Ch 21 -->
+            <div class="chapter-card" id="ch-card-21">
+                <div class="chapter-top">
+                    <div class="chapter-num">21</div>
+                    <span class="status-badge" id="ch-badge-21"></span>
+                </div>
+                <h3 class="chapter-title">ربط HTML مع ملفات التنسيق المتقدمة CSS</h3>
+                <p class="chapter-desc">طرق تضمين CSS واستخدام link و class و id.</p>
+                <button class="chapter-action-btn" id="ch-btn-21"></button>
+            </div>
+
+            <!-- Ch 22 -->
+            <div class="chapter-card" id="ch-card-22">
+                <div class="chapter-top">
+                    <div class="chapter-num">22</div>
+                    <span class="status-badge" id="ch-badge-22"></span>
+                </div>
+                <h3 class="chapter-title">ربط HTML مع السكربتات التفاعلية JavaScript</h3>
+                <p class="chapter-desc">استدعاء وسم script وخصائص defer و async والأحداث onload و onclick.</p>
+                <button class="chapter-action-btn" id="ch-btn-22"></button>
+            </div>
+
+            <!-- Ch 23 -->
+            <div class="chapter-card" id="ch-card-23">
+                <div class="chapter-top">
+                    <div class="chapter-num">23</div>
+                    <span class="status-badge" id="ch-badge-23"></span>
+                </div>
+                <h3 class="chapter-title">تحسين أداء الصفحات وسرعة التحميل</h3>
+                <p class="chapter-desc">استخدام التحميل الكسول للصور loading="lazy" وضغط الأكواد والموارد.</p>
+                <button class="chapter-action-btn" id="ch-btn-23"></button>
+            </div>
+
+            <!-- Ch 24 -->
+            <div class="chapter-card" id="ch-card-24">
+                <div class="chapter-top">
+                    <div class="chapter-num">24</div>
+                    <span class="status-badge" id="ch-badge-24"></span>
+                </div>
+                <h3 class="chapter-title">أفضل الممارسات وتجنب الأخطاء الشائعة</h3>
+                <p class="chapter-desc">فحص الأكواد بواسطة W3C Validator وكتابة كود نظيف وقابل للصيانة.</p>
+                <button class="chapter-action-btn" id="ch-btn-24"></button>
+            </div>
+
+            <!-- Ch 25 -->
+            <div class="chapter-card" id="ch-card-25">
+                <div class="chapter-top">
+                    <div class="chapter-num">25</div>
+                    <span class="status-badge" id="ch-badge-25"></span>
+                </div>
+                <h3 class="chapter-title">المشروع التطبيقي الشامل: بناء هيكل موقع كامل</h3>
+                <p class="chapter-desc">تجميع كل ما تعلمته في الـ 24 فصل لبناء هيكل كامل لموقع إلكتروني متعدد الصفحات.</p>
+                <button class="chapter-action-btn" id="ch-btn-25"></button>
+            </div>
+        </div>
+
+        <!-- Quiz 5 -->
+        <div class="quiz-card" id="quiz-card-5">
+            <div class="quiz-info">
+                <div class="quiz-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+                <div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+                        <h3 class="quiz-title">اختبار الجزء الخامس (الفصول 21 - 25)</h3>
+                        <span class="points-badge-25"><i class="fa-solid fa-star"></i> 25 نقطة</span>
+                    </div>
+                    <p class="quiz-desc">اختبار التطبيق والربط والتكامل بين HTML والتقنيات البرمجية المتقدمة.</p>
+                </div>
+            </div>
+            <button class="quiz-start-btn" id="quiz-btn-5"></button>
+        </div>
+
+
+        <!-- ==================== FINAL EXAM BOX ==================== -->
+        <section class="final-quiz-card" id="final-quiz-card">
+            <div class="quiz-info">
+                <div class="final-quiz-icon">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <div>
+                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 6px;">
+                        <h2 class="quiz-title" style="font-size: 1.6rem;">🎓 الاختبار النهائي الشامل لمسار HTML</h2>
+                        <!-- Distinct 70 Points Badge -->
+                        <span class="points-badge-70"><i class="fa-solid fa-award"></i> 70 نقطة</span>
+                    </div>
+                    <p class="quiz-desc" style="font-size: 1.05rem;">
+                        اجتاز هذا الاختبار النهائي الشامل لتحصيل النقاط وإتمام جميع فصول واختبارات HTML لفتح مسار CSS.
+                    </p>
+                </div>
+            </div>
+            <button class="final-quiz-btn" id="final-quiz-btn"></button>
+        </section>
+
+    </main>
+
+    <!-- Locked Alert Modal -->
+    <div id="lock-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-icon-box">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h3 class="modal-title">المحتوى مغلق حالياً</h3>
+            <p id="modal-msg-text" class="modal-desc"></p>
+            <button class="close-modal-btn" onclick="closeLockModal()">فهمت ذلك</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        جميع الحقوق محفوظة © 2026 - منصة VELZO التعليمية
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        // Platform Logos URLs
+        const DARK_LOGO_URL = "https://files.catbox.moe/l4juom.jpeg";
+        const LIGHT_LOGO_URL = "https://files.catbox.moe/ln2rqt.jpeg";
+
+        // DOM Elements
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const themeText = document.getElementById('theme-text');
+        const platformLogo = document.getElementById('platform-logo');
+        const bgWatermarkLogo = document.getElementById('bg-watermark-logo');
+        const pointsCountEl = document.getElementById('points-count');
+        const lockModal = document.getElementById('lock-modal');
+        const modalMsgText = document.getElementById('modal-msg-text');
+
+        // Theme Setup
+        function applyTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('velzo_theme', theme);
+            if (theme === 'dark') {
+                platformLogo.src = DARK_LOGO_URL;
+                bgWatermarkLogo.src = DARK_LOGO_URL;
+                themeIcon.className = 'fa-solid fa-sun';
+                themeText.textContent = 'الوضع المشرق';
+            } else {
+                platformLogo.src = LIGHT_LOGO_URL;
+                bgWatermarkLogo.src = LIGHT_LOGO_URL;
+                themeIcon.className = 'fa-solid fa-moon';
+                themeText.textContent = 'الوضع الداكن';
+            }
+        }
+        const savedTheme = localStorage.getItem('velzo_theme') || 'dark';
+        applyTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+
+        // Points Check
+        let userPoints = parseInt(localStorage.getItem('velzo_points')) || 0;
+        pointsCountEl.textContent = userPoints;
+
+        // User Progress Tracking
+        // highestUnlockedChapter: default 1
+        let unlockedChapter = parseInt(localStorage.getItem('velzo_html_unlocked_ch')) || 1;
+        // highestUnlockedQuiz: default 1
+        let unlockedQuiz = parseInt(localStorage.getItem('velzo_html_unlocked_quiz')) || 1;
+
+        // Modal triggers
+        function showLockModal(message) {
+            modalMsgText.textContent = message;
+            lockModal.style.display = 'flex';
+        }
+        function closeLockModal() {
+            lockModal.style.display = 'none';
+        }
+        lockModal.addEventListener('click', (e) => {
+            if (e.target === lockModal) closeLockModal();
+        });
+
+        // 1. Chapters Lock Logic (1 to 25)
+        for (let i = 1; i <= 25; i++) {
+            const card = document.getElementById(`ch-card-${i}`);
+            const badge = document.getElementById(`ch-badge-${i}`);
+            const btn = document.getElementById(`ch-btn-${i}`);
+
+            if (i <= unlockedChapter) {
+                card.classList.add('unlocked');
+                badge.className = 'status-badge open';
+                badge.innerHTML = '<i class="fa-solid fa-unlock"></i> مفتوح';
+                btn.className = 'chapter-action-btn active';
+                btn.innerHTML = '<span>ابدأ الفصل الآن</span> <i class="fa-solid fa-chevron-left"></i>';
+                btn.onclick = () => { window.location.href = `chapter${i}.HTML`; };
+            } else {
+                card.classList.add('locked');
+                badge.className = 'status-badge lock';
+                badge.innerHTML = '<i class="fa-solid fa-lock"></i> مغلق';
+                btn.className = 'chapter-action-btn disabled';
+                btn.innerHTML = '<span>مغلق</span> <i class="fa-solid fa-lock"></i>';
+                
+                const lockMsg = "أكمل الفصل السابق لتتمكن من الوصول لهذا الفصل";
+                btn.onclick = () => showLockModal(lockMsg);
+                card.onclick = (e) => {
+                    if (e.target.tagName !== 'BUTTON') showLockModal(lockMsg);
+                };
+            }
+        }
+
+        // 2. Part Quizzes Lock Logic (1 to 5)
+        // Quiz 1 requires Chapter 5 completed (unlockedChapter > 5)
+        // Quiz N requires Chapter N*5 completed (unlockedChapter > N*5)
+        for (let q = 1; q <= 5; q++) {
+            const quizCard = document.getElementById(`quiz-card-${q}`);
+            const quizBtn = document.getElementById(`quiz-btn-${q}`);
+            const reqChapter = q * 5;
+
+            if (unlockedChapter > reqChapter || unlockedQuiz > q) {
+                quizCard.classList.remove('locked');
+                quizBtn.className = 'quiz-start-btn';
+                quizBtn.innerHTML = '<span>ابدأ الاختبار الآن</span> <i class="fa-solid fa-arrow-left"></i>';
+                quizBtn.onclick = () => { window.location.href = `part${q}.HTML`; };
+            } else {
+                quizCard.classList.add('locked');
+                quizBtn.className = 'quiz-start-btn disabled';
+                quizBtn.innerHTML = '<span>اختبار مغلق</span> <i class="fa-solid fa-lock"></i>';
+                
+                const quizLockMsg = "أكمل الفصول السابقة لتتمكن من الوصول لهذا الاختبار";
+                quizBtn.onclick = () => showLockModal(quizLockMsg);
+                quizCard.onclick = (e) => {
+                    if (e.target.tagName !== 'BUTTON') showLockModal(quizLockMsg);
+                };
+            }
+        }
+
+        // 3. Final Quiz Lock Logic (Part Final / Part!)
+        // Requires all 25 chapters unlocked/completed (unlockedChapter > 25) and all 5 quizzes completed (unlockedQuiz >= 6)
+        const finalCard = document.getElementById('final-quiz-card');
+        const finalBtn = document.getElementById('final-quiz-btn');
+
+        if (unlockedChapter > 25 && unlockedQuiz >= 6) {
+            finalCard.classList.remove('locked');
+            finalBtn.className = 'final-quiz-btn';
+            finalBtn.innerHTML = '<span>دخول الاختبار النهائي الآن</span> <i class="fa-solid fa-award"></i>';
+            finalBtn.onclick = () => { window.location.href = 'part_final.HTML'; };
+        } else {
+            finalCard.classList.add('locked');
+            finalBtn.className = 'final-quiz-btn disabled';
+            finalBtn.innerHTML = '<span>الاختبار النهائي مغلق</span> <i class="fa-solid fa-lock"></i>';
+            
+            const finalLockMsg = "أكمل كافة الفصول والاختبارات السابقة لتتمكن من الوصول لهذا الاختبار النهائي";
+            finalBtn.onclick = () => showLockModal(finalLockMsg);
+            finalCard.onclick = (e) => {
+                if (e.target.tagName !== 'BUTTON') showLockModal(finalLockMsg);
+            };
+        }
+
+        // 4. CSS Unlock Qualification Check
+        // Require: Completed Final Quiz (unlockedQuiz > 6) AND Points >= 135
+        const isFinalCompleted = localStorage.getItem('velzo_html_final_completed') === 'true';
+        if (isFinalCompleted && userPoints >= 135) {
+            localStorage.setItem('velzo_html_completed', 'true');
+        } else {
+            localStorage.setItem('velzo_html_completed', 'false');
+        }
+    </script>
+</body>
+</html>
